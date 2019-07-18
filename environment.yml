@@ -5,7 +5,7 @@ channels:
 dependencies:
   - pip
   - pip:
-    - pylandstats==0.6.1
+    - pylandstats==1.0.0
   - python=3
-  - geopandas=0.5.0
-  - pyproj=1.9.6
+  - geopandas=0.5.1
+  - pyproj=2.2.1
