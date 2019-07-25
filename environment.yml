@@ -1,11 +1,12 @@
 name: pylandstats
+channel_priority: strict
 channels:
   - conda-forge
   - defaults
 dependencies:
   - pip
   - pip:
-    - pylandstats==1.0.0
+    - pylandstats==1.0.2
   - python=3
   - descartes=1.1.0
   - geopandas=0.5.1
