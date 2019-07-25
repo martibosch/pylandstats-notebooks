@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# modify kernel name in notebooks when using binder (see issue below)
+# https://github.com/jupyterhub/binder/issues/152#issuecomment-469801364
+sed -i 's/"Python (pylandstats)"/"Python 3"/' notebooks/*.ipynb
+sed -i 's/"name": "pylandstats"/"name": "python3"/' notebooks/*.ipynb
