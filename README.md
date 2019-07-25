@@ -5,7 +5,7 @@
 
 Example notebooks of the [PyLandStats](https://github.com/martibosch/pylandstats) library.
 
-See the list of notebooks below (the notebooks are stored in the [`notebooks` folder](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks/00-overview.ipynb)):
+See the list of notebooks below (the notebooks are stored in the [`notebooks` folder](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks)):
 
 ### Tutorial
 
