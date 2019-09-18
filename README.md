@@ -17,7 +17,8 @@ See the list of notebooks below (the notebooks are stored in the [`notebooks` fo
 
 ### Annex
 
-* [FRAGSTATS comparison](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks/A01-fragstats-comparison.ipynb)
+* [FRAGSTATS metrics comparison](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks/A01-fragstats-metrics-comparison.ipynb)
+* [Performance notes](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks/A02-performance-notes.ipynb)
 
 
 ## See also
