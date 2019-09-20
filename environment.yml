@@ -5,7 +5,7 @@ channels:
 dependencies:
   - pip
   - pip:
-    - pylandstats==1.1.1
+    - pylandstats==2.0.0a0
   - python=3
   - descartes=1.1.0
   - geopandas=0.5.1
