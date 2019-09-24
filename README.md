@@ -12,7 +12,7 @@ See the list of notebooks below (the notebooks are stored in the [`notebooks` fo
 * [Overview](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks/00-overview.ipynb)
 * [Landscape analysis](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks/01-landscape-analysis.ipynb)
 * [Spatiotemporal analysis](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks/02-spatiotemporal-analysis.ipynb)
-* [Gradient analysis](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks/03-gradient-analysis.ipynb)
+* [Zonal analysis](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks/03-zonal-analysis.ipynb)
 * [Spatiotemporal buffer analysis](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks/04-spatiotemporal-buffer-analysis.ipynb)
 
 ### Annex
