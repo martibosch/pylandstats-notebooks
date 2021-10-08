@@ -19,7 +19,7 @@ See the list of notebooks below (the notebooks are stored in the [`notebooks` fo
 
 * [FRAGSTATS metrics comparison](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks/A01-fragstats-metrics-comparison.ipynb)
 * [Performance notes](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks/A02-performance-notes.ipynb)
-
+* [Swiss Land Statistics preprocessing](https://github.com/martibosch/pylandstats-notebooks/blob/master/notebooks/A03-swisslandstats-preprocessing.ipynb)
 
 ## See also
 

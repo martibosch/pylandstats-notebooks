@@ -14,7 +14,7 @@ install:
   - conda env create -f environment.yml
   - source activate pylandstats
   - conda install -c conda-forge ipykernel nbconvert
-  - conda list  
+  - conda list
   - python -m ipykernel install --user --name pylandstats --display-name "Python (pylandstats)"
 
 script: make execute_notebooks

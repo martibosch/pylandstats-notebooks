@@ -1,25 +1,84 @@
-.PHONY: execute_notebooks
+.PHONY: create_environment register_ipykernel download_lulc lulc_rasters \
+	execute_notebooks
 
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
 
+# Set up python interpreter environment
+## create conda environment
+create_environment:
+	conda env create -f environment.yml
+
+## Register the environment as an IPython kernel for Jupyter
+register_ipykernel:
+	python -m ipykernel install --user --name pylandstats \
+		--display-name "Python (pylandstats)"
+
+# global variables/rules
+DATA_DIR = data
+DATA_RAW_DIR := $(DATA_DIR)/raw
+DATA_PROCESSED_DIR := $(DATA_DIR)/processed
+define MAKE_DATA_SUB_DIR
+$(DATA_SUB_DIR): | $(DATA_DIR)
+	mkdir $$@
+endef
+$(DATA_DIR):
+	mkdir $@
+$(foreach DATA_SUB_DIR, $(DATA_RAW_DIR) $(DATA_PROCESSED_DIR), \
+	$(eval $(MAKE_DATA_SUB_DIR)))
+
 NOTEBOOKS_DIR = notebooks
-OUTPUT_DIR := $(NOTEBOOKS_DIR)/output
+NOTEBOOK_OUTPUT_DIR := $(NOTEBOOKS_DIR)/output
 
-$(OUTPUT_DIR):
-	mkdir $(OUTPUT_DIR)
+$(NOTEBOOK_OUTPUT_DIR):
+	mkdir $@
 
-execute_notebooks: | $(OUTPUT_DIR)
-	jupyter nbconvert --ExecutePreprocessor.timeout=600 --to notebook \
-		--execute $(NOTEBOOKS_DIR)/*.ipynb --output-dir $(OUTPUT_DIR)
-	rm -rf $(OUTPUT_DIR)
+# land use/land cover data
+LULC_URI = https://www.bfs.admin.ch/bfsstatic/dam/assets/6646411/master
+LULC_DATA_DIR := $(DATA_RAW_DIR)/lulc
+LULC_CSV_FILEPATH := $(LULC_DATA_DIR)/AREA_NOAS04_17_181029.csv
+
+$(LULC_DATA_DIR): | $(DATA_RAW_DIR)
+	mkdir $@
+$(LULC_DATA_DIR)/%.zip: | $(LULC_DATA_DIR)
+	curl $(LULC_URI) -o $@
+$(LULC_DATA_DIR)/%.csv: $(LULC_DATA_DIR)/%.zip
+	unzip -j $< '*.csv' -d $(LULC_DATA_DIR)
+	touch $(LULC_CSV_FILEPATH)
+download_lulc: $(LULC_CSV_FILEPATH)
+
+LULC_COLUMNS := AS97R_4 AS09R_4 AS18_4
+LULC_TIF_FILEPATH = $(DATA_PROCESSED_DIR)/veveyse-$(LULC_COLUMN).tif
+LULC_TIF_FILEPATHS := $(foreach LULC_COLUMN, $(LULC_COLUMNS), \
+	$(LULC_TIF_FILEPATH))
+SLS_PREPROCESS_IPYNB := $(NOTEBOOKS_DIR)/A03-swisslandstats-preprocessing.ipynb
+
+define MAKE_LULC_TIF
+$(LULC_TIF_FILEPATH): $(LULC_CSV_FILEPATH) $(SLS_PREPROCESS_IPYNB) \
+	| $(DATA_PROCESSED_DIR) $(NOTEBOOK_OUTPUT_DIR)
+	papermill $(SLS_PREPROCESS_IPYNB) \
+	        $(NOTEBOOK_OUTPUT_DIR)/$$(notdir $(SLS_PREPROCESS_IPYNB)) \
+		-p lulc_csv_filepath $$< -p lulc_column $(LULC_COLUMN) \
+		-p dst_filepath $$@
+endef
+$(foreach LULC_COLUMN, $(LULC_COLUMNS), $(eval $(MAKE_LULC_TIF)))
+lulc_rasters: $(LULC_TIF_FILEPATHS)
+
+$(NOTEBOOK_OUTPUT_DIR)/%.ipynb: $(NOTEBOOKS_DIR)/%.ipynb $(LULC_TIF_FILEPATHS) \
+	| $(NOTEBOOK_OUTPUT_DIR)
+	papermill $< $@ --cwd $(NOTEBOOKS_DIR)
+
+NOTEBOOK_OUTPUT_IPYNB_FILEPATHS := $(foreach NOTEBOOK_IPYNB, \
+	$(wildcard $(NOTEBOOKS_DIR)/*.ipynb), \
+	$(NOTEBOOK_OUTPUT_DIR)/$(notdir $(NOTEBOOK_IPYNB)))
+execute_notebooks: $(NOTEBOOK_OUTPUT_IPYNB_FILEPATHS)
+
+.DEFAULT_GOAL := execute_notebooks
 
 #################################################################################
 # Self Documenting Commands                                                     #
 #################################################################################
-
-.DEFAULT_GOAL := help
 
 # Inspired by <http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html>
 # sed script explained:
