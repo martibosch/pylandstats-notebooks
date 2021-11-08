@@ -65,4 +65,4 @@ jobs:
 
       - name: Test notebooks
         run: |
-          make
+          snakemake -c1
