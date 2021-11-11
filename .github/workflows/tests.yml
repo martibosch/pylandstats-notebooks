@@ -1,0 +1,68 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+
+  build:
+
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        include:
+          - os: ubuntu-latest
+            environment-file: environment.yml
+            miniforge-variant: Mambaforge
+            miniforge-version: 4.9.2-4
+
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Setup conda environment with mambaforge
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          use-mamba: true
+          activate-environment: pylandstats
+          condarc-file: ${{ matrix.condarc-file }}
+          environment-file: ${{ matrix.environment-file }}
+          miniforge-variant: ${{ matrix.miniforge-variant }}
+          miniforge-version: ${{ matrix.miniforge-version }}
+
+      - name: Test environment
+        run: |
+          conda list
+          conda info --all
+          python -c "import pylandstats; print('pylandstats version', pylandstats.__version__)"
+
+      - name: Add notebook linting dependencies
+        run: |
+          mamba install -c conda-forge black flake8 isort nbqa
+
+      - name: Lint notebooks
+        run: |
+          nbqa black ./notebooks/*.ipynb --check --diff
+          nbqa isort ./notebooks/*.ipynb --check-only
+          nbqa flake8 ./notebooks/*.ipynb
+
+      - name: Register ipykernel
+        run: |
+          make register_ipykernel
+
+      - name: Test notebooks
+        run: |
+          make

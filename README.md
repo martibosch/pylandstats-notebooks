@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/martibosch/pylandstats-notebooks.svg?branch=master)](https://travis-ci.org/martibosch/pylandstats-notebooks)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/martibosch/pylandstats-notebooks/master?filepath=notebooks)
+[![Build Status](https://github.com/martibosch/pylandstats-notebooks/workflows/tests/badge.svg?branch=main)](https://github.com/martibosch/pylandstats-notebooks/actions?query=workflow%3Atests)
 
 # PyLandStats Notebooks
 
