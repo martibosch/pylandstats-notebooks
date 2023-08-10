@@ -1,9 +1,8 @@
 name: pylandstats
 channels:
   - conda-forge
-  - defaults
+  - bioconda
 dependencies:
-  - descartes
   - geopandas
   - ipykernel
   - matplotlib>=3.4
@@ -12,7 +11,7 @@ dependencies:
   - pre-commit
   - pygeos
   - pylandstats=2.4.2
-  - pyproj
-  - python=3
+  - python=3.10
   - seaborn
+  - snakemake
   - swisslandstats-geopy=0.10.0

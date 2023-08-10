@@ -43,26 +43,14 @@ jobs:
           miniforge-variant: ${{ matrix.miniforge-variant }}
           miniforge-version: ${{ matrix.miniforge-version }}
 
-      - name: Test environment
-        run: |
-          conda list
-          conda info --all
-          python -c "import pylandstats; print('pylandstats version', pylandstats.__version__)"
-
-      - name: Add notebook linting dependencies
-        run: |
-          mamba install -c conda-forge black flake8 isort nbqa
-
-      - name: Lint notebooks
-        run: |
-          nbqa black ./notebooks/*.ipynb --check --diff
-          nbqa isort ./notebooks/*.ipynb --check-only
-          nbqa flake8 ./notebooks/*.ipynb
-
       - name: Register ipykernel
         run: |
-          make register_ipykernel
+          snakemake -c1 register_ipykernel
+
+      - name: Preprocess LULC data
+        run: |
+          snakemake -c1 lulc_tifs
 
       - name: Test notebooks
         run: |
-          make
+          snakemake -c1 run_notebooks
