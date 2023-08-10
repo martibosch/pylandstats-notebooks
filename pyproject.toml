@@ -1,5 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [tool.black]
 line-length = 88
 
-[tool.isort]
-known_first_party = "pylandstats"
+[tool.ruff]
+line-length = 88
+select = ["D", "E", "F", "I"]
+
+[tool.ruff.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.isort]
+known-first-party = ["pylandstats"]
+
+[tool.nbqa.addopts]
+# ignore documentation errors in notebooks
+ruff = ["--ignore=D"]

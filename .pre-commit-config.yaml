@@ -1,3 +1,5 @@
+default_stages: [commit]
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
@@ -6,15 +8,59 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
 
-  - repo: https://github.com/kynan/nbstripout
-    rev: 0.3.9
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v2.37.0
     hooks:
-    - id: nbstripout
-      args: ["--keep-output"]
+      - id: commitizen
+
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.26.3
+    hooks:
+      - id: yamllint
+        args: ["-d relaxed"]
+
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.14 # Use the ref you want to point at
+    hooks:
+      - id: mdformat
+        # Optionally add plugins
+        additional_dependencies:
+          - mdformat-gfm
+          - mdformat-black
+
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.18.4
+    hooks:
+      - id: check-github-workflows
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.37.2
+    hooks:
+      - id: pyupgrade
+
+  - repo: https://github.com/psf/black
+    rev: 22.6.0
+    hooks:
+      - id: black
+
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.225
+    hooks:
+      - id: ruff
+
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.5.0
+    hooks:
+      - id: nbstripout
+        args: ["--keep-output"]
 
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.1.1
+    rev: 1.7.0
     hooks:
       - id: nbqa-black
-      - id: nbqa-isort
-      - id: nbqa-flake8
+      - id: nbqa-ruff
+
+  - repo: https://github.com/snakemake/snakefmt
+    rev: v0.6.0
+    hooks:
+      - id: snakefmt
