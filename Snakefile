@@ -25,7 +25,8 @@ rule register_ipykernel:
         ' "Python (pylandstats)"'
 
 
-# 1. land use/land cover data ----------------------------------------------------------
+# 1. data preprocessing ----------------------------------------------------------------
+# 1.1. land use/land cover data --------------------------------------------------------
 LULC_URL = "https://www.bfs.admin.ch/bfsstatic/dam/assets/6646411/master"
 LULC_DATA_DIR = path.join(DATA_RAW_DIR, "lulc")
 
@@ -70,6 +71,22 @@ rule lulc_tif:
 rule lulc_tifs:
     input:
         expand(rules.lulc_tif.output, lulc_column=LULC_COLUMNS),
+
+
+# 1.2. elevation zones
+ELEV_ZONES_IPYNB_FILENAME = "A04-elevation-zones.ipynb"
+ELEV_ZONES_GPKG_FILEPATH = path.join(DATA_PROCESSED_DIR, "elev-zones.gpkg")
+
+
+rule elev_zones:
+    input:
+        notebook=path.join(NOTEBOOKS_DIR, ELEV_ZONES_IPYNB_FILENAME),
+    output:
+        elev_zones=ELEV_ZONES_GPKG_FILEPATH,
+        notebook=path.join(NOTEBOOKS_OUTPUT_DIR, ELEV_ZONES_IPYNB_FILENAME),
+    shell:
+        "papermill {input.notebook} {output.notebook}"
+        " -p dst_filepath {output.elev_zones}"
 
 
 # 2. notebooks -------------------------------------------------------------------------

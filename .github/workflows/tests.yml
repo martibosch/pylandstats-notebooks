@@ -47,9 +47,9 @@ jobs:
         run: |
           snakemake -c1 register_ipykernel
 
-      - name: Preprocess LULC data
+      - name: Preprocess data
         run: |
-          snakemake -c1 lulc_tifs
+          snakemake -c1 lulc_tifs elev_zones
 
       - name: Test notebooks
         run: |
