@@ -96,10 +96,10 @@ NOTEBOOK_FILENAMES = [
     "02-spatiotemporal-analysis.ipynb",
     "03-zonal-analysis.ipynb",
     "04-spatiotemporal-buffer-analysis.ipynb",
-    # "05-cluster-analysis.ipynb",
+    "05-cluster-analysis.ipynb",
     "A01-fragstats-metrics-comparison.ipynb",
     "A02-performance-notes.ipynb",
-    "A03-swisslandstats-preprocessing.ipynb",
+    # "A03-swisslandstats-preprocessing.ipynb",
 ]
 
 
@@ -109,7 +109,7 @@ rule run_notebook:
     output:
         notebook=path.join(NOTEBOOKS_OUTPUT_DIR, "{notebook_filename}"),
     shell:
-        "papermill {input.notebook} {output.notebook}"
+        "papermill --cwd {NOTEBOOKS_DIR} {input.notebook} {output.notebook}"
 
 
 rule run_notebooks:
