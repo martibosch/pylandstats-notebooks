@@ -95,7 +95,7 @@ NOTEBOOK_FILENAMES = [
     "01-landscape-analysis.ipynb",
     "02-spatiotemporal-analysis.ipynb",
     "03-zonal-analysis.ipynb",
-    "04-spatiotemporal-buffer-analysis.ipynb",
+    "04-spatiotemporal-zonal-analysis.ipynb",
     "05-cluster-analysis.ipynb",
     "A01-fragstats-metrics-comparison.ipynb",
     "A02-performance-notes.ipynb",
