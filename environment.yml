@@ -10,7 +10,7 @@ dependencies:
   - papermill
   - pre-commit
   - pygeos
-  - pylandstats=2.4.2
+  - pylandstats=3.0.0rc0
   - python=3.10
   - seaborn
   - snakemake
