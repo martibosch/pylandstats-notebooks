@@ -3,6 +3,7 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
+  - contextily
   - geopandas
   - ipykernel
   - matplotlib>=3.4
