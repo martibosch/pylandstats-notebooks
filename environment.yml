@@ -9,10 +9,12 @@ dependencies:
   - matplotlib>=3.4
   - osmnx>=1
   - papermill
+  - pip
+  - pip:
+      - pylandstats=3.0.0
   - pre-commit
   - pygeos
-  - pylandstats=3.0.0rc0
   - python=3.10
   - seaborn
   - snakemake
-  - swisslandstats-geopy=0.10.0
+  - swisslandstats-geopy=0.11.0

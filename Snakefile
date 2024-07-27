@@ -27,50 +27,56 @@ rule register_ipykernel:
 
 # 1. data preprocessing ----------------------------------------------------------------
 # 1.1. land use/land cover data --------------------------------------------------------
-LULC_URL = "https://www.bfs.admin.ch/bfsstatic/dam/assets/6646411/master"
-LULC_DATA_DIR = path.join(DATA_RAW_DIR, "lulc")
+# LULC_URL = "https://www.bfs.admin.ch/bfsstatic/dam/assets/6646411/master"
+# SLS_URL = "https://dam-api.bfs.admin.ch/hub/api/dam/assets/25885691/master"
+SLS_DATA_DIR = path.join(DATA_RAW_DIR, "sls")
+SLS_PREPROCESS_IPYNB = path.join(
+    NOTEBOOKS_DIR, "A03-swisslandstats-preprocessing.ipynb"
+)
+# ACHTUNG: to pass a list as a papermill parameter we'd need to use a yml file, we are
+# thus ommitting this as the notebook already includes the same list of columns as
+# default value
+LULC_COLUMNS = ["LU85_4", "LU97_4", "LU09_4", "LU18_4"]
+VEVEYSE_NOMINATIM_QUERY = "District de la Veveyse, Fribourg, Switzerland"
+
+VEVEYSE_DST_DIR = path.join(DATA_PROCESSED_DIR, "veveyse")
 
 
-rule download_lulc:
-    output:
-        temp(path.join(LULC_DATA_DIR, "ag-b-00.03-36-noas04G.zip")),
-    shell:
-        "curl {LULC_URL} -o {output}"
-
-
-rule lulc_csv:
+rule veveyse_lulc_tifs:
     input:
-        rules.download_lulc.output,
+        notebook=SLS_PREPROCESS_IPYNB,
     output:
-        path.join(LULC_DATA_DIR, "AREA_NOAS04_17_181029.csv"),
-    run:
-        shell("unzip -j {input} '*.csv' -d {LULC_DATA_DIR}")
-        shell("touch {output}")
-
-
-LULC_COLUMNS = ["AS97R_4", "AS09R_4", "AS18_4"]
-
-
-rule lulc_tif:
-    input:
-        lulc_csv=rules.lulc_csv.output,
-        notebook=path.join(NOTEBOOKS_DIR, "A03-swisslandstats-preprocessing.ipynb"),
-    output:
-        lulc_tif=path.join(DATA_PROCESSED_DIR, "veveyse-{lulc_column}.tif"),
+        lulc_tifs=expand(
+            path.join(VEVEYSE_DST_DIR, "{lulc_column}.tif"), lulc_column=LULC_COLUMNS
+        ),
         notebook=path.join(
             NOTEBOOKS_OUTPUT_DIR,
-            "A03-swisslandstats-preprocessing-{lulc_column}.ipynb",
+            "A03-swisslandstats-preprocessing-veveyse.ipynb",
         ),
     shell:
         "papermill {input.notebook} {output.notebook}"
-        " -p lulc_csv_filepath {input.lulc_csv}"
-        " -p lulc_column {wildcards.lulc_column}"
-        " -p dst_filepath {output.lulc_tif}"
+        " -p nominatim_query '{VEVEYSE_NOMINATIM_QUERY}'"
+        " -p dst_dir {VEVEYSE_DST_DIR}"
 
 
-rule lulc_tifs:
+SWITZERLAND_DST_DIR = path.join(DATA_PROCESSED_DIR, "switzerland")
+
+
+rule switzerland_lulc_tifs:
     input:
-        expand(rules.lulc_tif.output, lulc_column=LULC_COLUMNS),
+        notebook=SLS_PREPROCESS_IPYNB,
+    output:
+        lulc_tifs=expand(
+            path.join(SWITZERLAND_DST_DIR, "{lulc_column}.tif"),
+            lulc_column=LULC_COLUMNS,
+        ),
+        notebook=path.join(
+            NOTEBOOKS_OUTPUT_DIR,
+            "A03-swisslandstats-preprocessing-switzerland.ipynb",
+        ),
+    shell:
+        "papermill {input.notebook} {output.notebook}"
+        " -p dst_dir {SWITZERLAND_DST_DIR}"
 
 
 # 1.2. elevation zones
