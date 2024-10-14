@@ -1,26 +1,26 @@
-default_stages: [commit]
+default_stages: [pre-commit]
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v5.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
 
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.25.0
+    rev: v3.29.1
     hooks:
       - id: commitizen
 
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.32.0
+    rev: v1.35.1
     hooks:
       - id: yamllint
         args: ["-d relaxed"]
 
   - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.17 # Use the ref you want to point at
+    rev: 0.7.18 # Use the ref you want to point at
     hooks:
       - id: mdformat
         # Optionally add plugins
@@ -29,17 +29,17 @@ repos:
           - mdformat-black
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.26.3
+    rev: 0.29.4
     hooks:
       - id: check-github-workflows
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.10.1
+    rev: v3.18.0
     hooks:
       - id: pyupgrade
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.4.1
+    rev: v0.6.9
     hooks:
       # Run the linter.
       - id: ruff
@@ -48,13 +48,13 @@ repos:
       - id: ruff-format
 
   - repo: https://github.com/kynan/nbstripout
-    rev: 0.6.1
+    rev: 0.7.1
     hooks:
       - id: nbstripout
         args: ["--keep-output"]
 
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.7.0
+    rev: 1.8.7
     hooks:
       - id: nbqa-black
       - id: nbqa-ruff
@@ -63,6 +63,6 @@ repos:
       - id: nbqa-ruff
 
   - repo: https://github.com/snakemake/snakefmt
-    rev: v0.8.4
+    rev: v0.10.2
     hooks:
       - id: snakefmt
