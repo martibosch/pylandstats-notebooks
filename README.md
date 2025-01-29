@@ -15,7 +15,7 @@ See the list of notebooks below (the notebooks are stored in the [`notebooks` fo
 - [Spatiotemporal analysis](https://github.com/martibosch/pylandstats-notebooks/blob/main/notebooks/02-spatiotemporal-analysis.ipynb)
 - [Zonal analysis](https://github.com/martibosch/pylandstats-notebooks/blob/main/notebooks/03-zonal-analysis.ipynb)
 - [Spatiotemporal buffer analysis](https://github.com/martibosch/pylandstats-notebooks/blob/main/notebooks/04-spatiotemporal-buffer-analysis.ipynb)
-- [Cluster analysis](https://github.com/martibosch/pylandstats-notebooks/blob/main/notebooks/05-cluster-analysis.ipynb)
+- [Spatial signature analysis](https://github.com/martibosch/pylandstats-notebooks/blob/main/notebooks/05-spatial-signature-analysis.ipynb)
 
 ### Annex
 
