@@ -17,4 +17,4 @@ dependencies:
   - python=3.10
   - seaborn
   - snakemake
-  - swisslandstats-geopy=0.11.0
+  - swisslandstats-geopy=0.12.0
