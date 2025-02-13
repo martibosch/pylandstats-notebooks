@@ -49,7 +49,7 @@ jobs:
 
       - name: Preprocess data
         run: |
-          snakemake -c1 lulc_tifs elev_zones
+          snakemake -c1 veveyse_lulc_tifs switzerland_lulc_tifs elev_zones
 
       - name: Test notebooks
         run: |
