@@ -39,7 +39,7 @@ repos:
       - id: pyupgrade
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.4.1
+    rev: v0.9.6
     hooks:
       # Run the linter.
       - id: ruff
@@ -52,14 +52,6 @@ repos:
     hooks:
       - id: nbstripout
         args: ["--keep-output"]
-
-  - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.8.5
-    hooks:
-      - id: nbqa-black
-      - id: nbqa-ruff
-        args: ["--fix"]
-      - id: nbqa-ruff
 
   - repo: https://github.com/snakemake/snakefmt
     rev: v0.8.4
