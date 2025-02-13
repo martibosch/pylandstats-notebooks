@@ -11,7 +11,7 @@ dependencies:
   - papermill
   - pip
   - pip:
-      - pylandstats=3.0.0
+      - pylandstats==3.1.0
   - pre-commit
   - pygeos
   - python=3.10
