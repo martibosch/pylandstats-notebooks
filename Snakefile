@@ -95,6 +95,28 @@ rule elev_zones:
         " -p dst_filepath {output.elev_zones}"
 
 
+# 1.3. bird richness
+BIRD_RICHNESS_IPYNB_FILENAME = "A06-bird-richness-preprocessing.ipynb"
+BIRD_RICHNESS_GDF_FILEPATH = path.join(DATA_PROCESSED_DIR, "bird-richness.gpkg")
+BIRD_RICHNESS_LULC_FILEPATH = path.join(DATA_PROCESSED_DIR, "bird-richness-lulc.tif")
+
+
+rule bird_richness_data:
+    input:
+        notebook=path.join(NOTEBOOKS_DIR, BIRD_RICHNESS_IPYNB_FILENAME),
+    output:
+        bird_richness_gdf=BIRD_RICHNESS_GDF_FILEPATH,
+        bird_richness_lulc=BIRD_RICHNESS_LULC_FILEPATH,
+        notebook=path.join(NOTEBOOKS_OUTPUT_DIR, BIRD_RICHNESS_IPYNB_FILENAME),
+    params:
+        buffer_dist=1000,
+    shell:
+        "papermill {input.notebook} {output.notebook}"
+        " -p buffer_dist {params.buffer_dist}"
+        " -p dst_bird_richness_filepath {output.bird_richness_gdf}"
+        " -p dst_lulc_filepath {output.bird_richness_lulc}"
+
+
 # 2. notebooks -------------------------------------------------------------------------
 NOTEBOOK_FILENAMES = [
     "00-overview.ipynb",
