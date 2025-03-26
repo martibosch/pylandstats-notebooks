@@ -13,7 +13,6 @@ dependencies:
   - pip:
       - pylandstats==3.1.0
   - pre-commit
-  - pygeos
   - python=3.12
   - seaborn
   - snakemake
